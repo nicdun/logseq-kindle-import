@@ -21,7 +21,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   semantic-release: 19.0.5
-  tailwindcss: 3.2.0
+  tailwindcss: 3.2.4
   typescript: 4.8.4
   vite: 3.1.8
   vite-plugin-logseq: 1.1.2
@@ -49,7 +49,7 @@ devDependencies:
   eslint-plugin-react-hooks: 4.6.0_eslint@8.25.0
   postcss: 8.4.20
   semantic-release: 19.0.5
-  tailwindcss: 3.2.0_postcss@8.4.20
+  tailwindcss: 3.2.4_postcss@8.4.20
   typescript: 4.8.4
   vite: 3.1.8
   vite-plugin-logseq: 1.1.2
@@ -3922,8 +3922,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /tailwindcss/3.2.0_postcss@8.4.20:
-    resolution: {integrity: sha512-ARh/W0uH5UlWIC2nn02V0+5fyF0k6qZliyt4QYic2upOhPUE/Spu1EURNc9txJ3+4j8OEmdigqfDpw4d2tA4vA==}
+  /tailwindcss/3.2.4_postcss@8.4.20:
+    resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:
@@ -3939,6 +3939,7 @@ packages:
       glob-parent: 6.0.2
       is-glob: 4.0.3
       lilconfig: 2.0.6
+      micromatch: 4.0.5
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
