@@ -14,7 +14,7 @@ To save the manuel transfer of your kindle highlights the plugin provides a way 
 4. The plugin will create a new logseq page and imports all highlights listed in the html file
 
 ## Demo
-[](./assets/demo-logseq-kindle-import.gif)
+![](./assets/demo-logseq-kindle-import.gif)
 
 ## Planned work
 - see the [open issues](https://github.com/nicdun/logseq-kindle-import/issues)
