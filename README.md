@@ -1,6 +1,6 @@
 # Logseq Kindle Import
 
-A Plugin that lets you import your kindle highlights which have been created on your kindle, kindle app on mobile or other devices.
+A plugin that lets you import your kindle highlights which have been created on your kindle, kindle app on mobile or other devices.
 
 ## Why?
 If you are reading a lot of books and use kindle as your daily reading driver, you will create a lot of highlights which could be used and connected in your logseq knowledge database. 
@@ -14,6 +14,7 @@ To save the manuel transfer of your kindle highlights the plugin provides a way 
 4. The plugin will create a new logseq page and imports all highlights listed in the html file
 
 ## Demo
-TBD
+[](./assets/demo-logseq-kindle-import.gif)
+
 ## Planned work
 - see the [open issues](https://github.com/nicdun/logseq-kindle-import/issues)
