@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.0.1...v1.1.0) (2023-01-19)
+
+
+### Features
+
+* setup logseq integration and readme. ([3d98730](https://github.com/nicdun/logseq-kindle-import/commit/3d9873046f5a89cffb16f9814e93624e836d1b0a))
+
 ## [1.0.1](https://github.com/nicdun/logseq-kindle-import/compare/v1.0.0...v1.0.1) (2022-12-27)
 
 
