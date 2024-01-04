@@ -29,6 +29,6 @@ export const createBlockOnCurrentPage = (uuid: string, highlight: KindleHighligh
   return logseq.Editor.appendBlockInPage(
     uuid,
     `${highlight.text}`,
-    { properties: { "page": highlight.page, "location": highlight.location } }
+    { properties: { ...(highlight.page && {"page": highlight.page}), "location": highlight.location } }
   );
 }

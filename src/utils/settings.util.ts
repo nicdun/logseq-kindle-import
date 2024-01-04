@@ -24,10 +24,10 @@ const config: SettingSchemaDesc[] = [
  * Settings object returns current settings.
  */
 export const settings = {
-  accessToken: (): string => logseq.settings!["accessToken"],
-  highlight: (): string => logseq.settings!["templateHighlight"],
-  pagePrefix: (): string => logseq.settings!["pagePrefix"],
-  pageProperties: (): string => logseq.settings!["pageProperties"],
+  accessToken: (): string => logseq.settings!["accessToken"] as string,
+  highlight: (): string => logseq.settings!["templateHighlight"]  as string,
+  pagePrefix: (): string => logseq.settings!["pagePrefix"] as string,
+  pageProperties: (): string => logseq.settings!["pageProperties"] as string,
 };
 
 /**
