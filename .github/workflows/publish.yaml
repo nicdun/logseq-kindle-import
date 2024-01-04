@@ -17,15 +17,12 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version-file: '.nvmrc'
-    - name: install pnpm
-      run: |
-        npm install -g pnpm
     - name: install dependencies
       run: |
-        pnpm install
+        npm install
     - name: build and test
       run: |
-        pnpm run build
+        npm run build
     - name: Install zip
       uses: montudor/action-zip@v1
     - name: Release

@@ -9,7 +9,7 @@ To save the manuel transfer of your kindle highlights the plugin provides a way 
 ## How to use?
 
 1. Go to your kindle app (e.g. mac or iphone), select a book whose highlights you'd like to export and export/share them.
-2. The kindle app creates a html file that contains all your highlights from that selected book
+2. Export your highlights by email - The kindle app creates a **.html file** that contains all your highlights from that selected book (exported markdown files won't work with the plugin).
 3. Open logseq > logseq kindle import plugin and choose the exported html file
 4. The plugin will create a new logseq page and imports all highlights listed in the html file
 

@@ -18,7 +18,7 @@ export const mapKindleDataToProperties = (
   };
 
   //const pagePropertiesFromSettings: Record<string, string> | null =
-    loadCustomPagePropertiesFromSettings();
+  //loadCustomPagePropertiesFromSettings();
 
   //const customProperties: Record<string, string> | null =
   //  generateCustomProperties(item, pagePropertiesFromSettings);
