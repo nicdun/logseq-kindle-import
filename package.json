@@ -7,8 +7,7 @@
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preinstall": "npx only-allow pnpm"
+    "build": "tsc && vite build"
   },
   "license": "MIT",
   "dependencies": {
@@ -42,6 +41,6 @@
   "logseq": {
     "id": "logseq-kindle-import",
     "title": "Kindle Highlights Import",
-    "icon": "./kindle-logo.png"
+    "icon": "./assets/kindle-logo.png"
   }
 }

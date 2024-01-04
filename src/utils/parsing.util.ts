@@ -8,7 +8,6 @@ export const parseKindleData = (content: string): KindleBook | null => {
   const body = dummyDom.querySelector("body");
   const highlights: NodeListOf<HTMLElement> =
     body?.querySelectorAll(".noteText")!;
-
   const kindleBook: KindleBook = {
     highlights: getKindleHighlights(Array.from(highlights)),
     title: getBookTitle(body),
@@ -23,9 +22,10 @@ export const parseKindleData = (content: string): KindleBook | null => {
 };
 
 const getKindleHighlights = (highlights: HTMLElement[]): KindleHighlight[] => {
+  //debugger;
   return highlights
     .filter((item) => isHighlightValid(item))
-    .map((item) => mapToKindleHighlight(item));
+    .map((item) => mapToKindleHighlight(item, item.previousElementSibling));
 };
 
 const getBookTitle = (body: HTMLBodyElement | null): string | undefined => {
@@ -39,56 +39,54 @@ const getBookAuthors = (body: HTMLBodyElement | null): string[] | undefined => {
   return body?.querySelector(".authors")?.textContent?.split(";");
 };
 
-const mapToKindleHighlight = (item: HTMLElement): KindleHighlight => {
+const mapToKindleHighlight = (item: HTMLElement, heading: HTMLElement | null): KindleHighlight => {
+  debugger;
   return {
     text: getHighlightText(item),
-    color: getHighlightColor(item),
-    page: getHighlightPage(item),
-    location: getHightlightLocation(item),
-    chapter: getHightlightChapter(item),
+    color: getHighlightColor(heading),
+    page: getHighlightPage(heading),
+    location: getHightlightLocation(heading),
+    chapter: getHightlightChapter(heading),
   };
 };
 
 const isHighlightValid = (item: HTMLElement): boolean => {
+
   const text = item.textContent?.trim();
 
   return (
-    text !== item.querySelector(".noteHeading")?.textContent?.trim() &&
     !!text &&
     text.length > 5
   );
 };
 
-const getHighlightColor = (item: Element): string | undefined => {
-  const color: string | undefined = item
-    .querySelector(".noteHeading")
-    ?.querySelector("span")?.innerHTML;
-
-  return color;
+const getHighlightColor = (item: Element | null): string | undefined => {
+  return item?.querySelector("span")?.innerHTML;
 };
 
-const getHighlightText = (item: HTMLElement): string => {
-  const text = item.textContent!.trim();
-  // TODO get only text content of element not of childs
-  return text.substring(0, text.lastIndexOf("Highlight")).trim();
+const getHighlightText = (item: HTMLElement | null): string | undefined => {
+  return item?.textContent!.trim();
 };
 
-const getHighlightPage = (item: HTMLElement): string | undefined => {
-  const text = item.querySelector(".noteHeading")?.textContent?.trim();
-  return !!text
-    ? text.substring(text.indexOf("Page") + 4, text.lastIndexOf("·")).trim()
-    : undefined;
+const getHighlightPage = (item: HTMLElement | null): string | undefined => {
+  const text = item?.textContent?.trim();
+
+  if(!text || text.indexOf("Page") < 0) {
+    return;
+  }
+
+  return text.substring(text.indexOf("Page") + 4, text.lastIndexOf("·")).trim();
 };
 
-const getHightlightLocation = (item: HTMLElement): string | undefined => {
-  const text = item.querySelector(".noteHeading")?.textContent?.trim();
+const getHightlightLocation = (item: HTMLElement | null): string | undefined => {
+  const text = item?.textContent?.trim();
   return !!text
     ? text.substring(text.indexOf("Location") + 8, text.length).trim()
     : undefined;
 };
 
 const getHightlightChapter = (item: HTMLElement): string | undefined => {
-  const text = item.querySelector(".noteHeading")?.textContent?.trim();
+  const text = item.textContent?.trim();
   return !!text
     ? text.substring(text.indexOf("-") + 1, text.lastIndexOf(">")).trim()
     : undefined;

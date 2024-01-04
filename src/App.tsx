@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import logo from "./assets/AmazonKindleLogo.png";
+import logo from "./assets/kindle-logo.png";
 import { useAppVisible } from "./hooks/useAppVisible";
 import KindleDashboard from "./components/KindleDashboard";
 
