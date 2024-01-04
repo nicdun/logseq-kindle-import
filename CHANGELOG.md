@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/nicdun/logseq-kindle-import/compare/v1.1.0...v1.1.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @logseq/libs to ^0.0.17 ([#107](https://github.com/nicdun/logseq-kindle-import/issues/107)) ([e5a66d7](https://github.com/nicdun/logseq-kindle-import/commit/e5a66d7fb149b055b3c44367d12e5d5685822937))
+* **npm, highlights:** fix pnpm & node v20 bug. Fix new html hightlight export format from amazon. ([ed82f21](https://github.com/nicdun/logseq-kindle-import/commit/ed82f2141a7f1ee765852eeec39f0b4aaa4e80b7))
+* **typing:** fix typing. ([c86c5e6](https://github.com/nicdun/logseq-kindle-import/commit/c86c5e6bb31efb88b614ab2fb51cd0902cdb0d24))
+
 # [1.1.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.0.1...v1.1.0) (2023-01-19)
 
 
