@@ -22,7 +22,6 @@ export const parseKindleData = (content: string): KindleBook | null => {
 };
 
 const getKindleHighlights = (highlights: HTMLElement[]): KindleHighlight[] => {
-  //debugger;
   return highlights
     .filter((item) => isHighlightValid(item))
     .map((item) => mapToKindleHighlight(item, item.previousElementSibling));
@@ -39,8 +38,7 @@ const getBookAuthors = (body: HTMLBodyElement | null): string[] | undefined => {
   return body?.querySelector(".authors")?.textContent?.split(";");
 };
 
-const mapToKindleHighlight = (item: HTMLElement, heading: HTMLElement | null): KindleHighlight => {
-  debugger;
+const mapToKindleHighlight = (item: HTMLElement, heading: Element | null): KindleHighlight => {
   return {
     text: getHighlightText(item),
     color: getHighlightColor(heading),
@@ -64,11 +62,12 @@ const getHighlightColor = (item: Element | null): string | undefined => {
   return item?.querySelector("span")?.innerHTML;
 };
 
-const getHighlightText = (item: HTMLElement | null): string | undefined => {
-  return item?.textContent!.trim();
+
+const getHighlightText = (item: HTMLElement): string => {
+  return item.textContent!.trim();
 };
 
-const getHighlightPage = (item: HTMLElement | null): string | undefined => {
+const getHighlightPage = (item: Element | null): string | undefined => {
   const text = item?.textContent?.trim();
 
   if(!text || text.indexOf("Page") < 0) {
@@ -78,15 +77,16 @@ const getHighlightPage = (item: HTMLElement | null): string | undefined => {
   return text.substring(text.indexOf("Page") + 4, text.lastIndexOf("·")).trim();
 };
 
-const getHightlightLocation = (item: HTMLElement | null): string | undefined => {
+const getHightlightLocation = (item: Element | null): string | undefined => {
   const text = item?.textContent?.trim();
   return !!text
     ? text.substring(text.indexOf("Location") + 8, text.length).trim()
     : undefined;
 };
 
-const getHightlightChapter = (item: HTMLElement): string | undefined => {
-  const text = item.textContent?.trim();
+
+const getHightlightChapter = (item: Element | null): string | undefined => {
+  const text = item?.textContent?.trim();
   return !!text
     ? text.substring(text.indexOf("-") + 1, text.lastIndexOf(">")).trim()
     : undefined;
