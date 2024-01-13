@@ -21,7 +21,7 @@ module.exports = {
         prepareCmd:
           "zip -qq -r " +
           pluginName +
-          "-${nextRelease.version}.zip package.json logo.png dist/",
+          "-${nextRelease.version}.zip package.json assets/kindle-logo.png dist/",
       },
     ],
     [
