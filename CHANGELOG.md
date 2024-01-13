@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.1.1...v1.2.0) (2024-01-13)
+
+
+### Features
+
+* **notes:** adding import notes feature. Configurable via logseq settings. ([9e91092](https://github.com/nicdun/logseq-kindle-import/commit/9e910922b79b88df3eca58c554cc5ed67ea73e1d))
+
 ## [1.1.1](https://github.com/nicdun/logseq-kindle-import/compare/v1.1.0...v1.1.1) (2024-01-04)
 
 
