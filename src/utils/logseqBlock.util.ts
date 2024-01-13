@@ -1,5 +1,6 @@
 import type { BlockEntity } from "@logseq/libs/dist/LSPlugin";
 import { KindleHighlight } from "../models/KindleHighlight";
+import { settings } from "./settings.util";
 
 export const createPagePropertiesBlock = async (
   block: BlockEntity,
@@ -29,6 +30,10 @@ export const createBlockOnCurrentPage = (uuid: string, highlight: KindleHighligh
   return logseq.Editor.appendBlockInPage(
     uuid,
     `${highlight.text}`,
-    { properties: { ...(highlight.page && {"page": highlight.page}), "location": highlight.location } }
+    { properties: { 
+      ...(highlight.page && {page: highlight.page}), 
+      ...(highlight.location && { location: highlight.location}),
+      ...((highlight.note && settings.syncNotes()) && { note: highlight.note })
+     } }
   );
 }

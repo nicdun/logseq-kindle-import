@@ -17,6 +17,14 @@ const config: SettingSchemaDesc[] = [
     key: "templateHighlight",
     title: "Highlight template",
     type: "string",
+  },
+  {
+    default: "true",
+    description:
+      "Set to true if you would like to sync your individual notes per highlight",
+    key: "syncNotes",
+    title: "Sync notes",
+    type: "boolean",
   }
 ];
 
@@ -28,6 +36,7 @@ export const settings = {
   highlight: (): string => logseq.settings!["templateHighlight"]  as string,
   pagePrefix: (): string => logseq.settings!["pagePrefix"] as string,
   pageProperties: (): string => logseq.settings!["pageProperties"] as string,
+  syncNotes: (): boolean => logseq.settings!["syncNotes"] as boolean
 };
 
 /**

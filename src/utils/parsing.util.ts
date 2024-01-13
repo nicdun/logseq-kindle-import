@@ -1,5 +1,6 @@
 import { KindleBook } from "../models/KindleBook";
 import { KindleHighlight } from "../models/KindleHighlight";
+import { HtmlHighlight } from "../models/htmlHightlight";
 
 export const parseKindleData = (content: string): KindleBook | null => {
   const dummyDom = document.createElement("html");
@@ -22,14 +23,31 @@ export const parseKindleData = (content: string): KindleBook | null => {
 };
 
 const getKindleHighlights = (highlights: HTMLElement[]): KindleHighlight[] => {
-  return highlights
-    .filter((item) => isHighlightValid(item))
-    .map((item) => mapToKindleHighlight(item, item.previousElementSibling));
+  const hightlightsSorted: HtmlHighlight[] = [];
+
+  highlights.forEach((item, index) => {
+    if(item.previousElementSibling?.innerHTML.includes('Highlight')) {
+      hightlightsSorted[index] = {
+        highlight: item,
+        header: item.previousElementSibling
+      };
+    }
+
+    if(item.nextElementSibling?.innerHTML.includes('Note')) {
+      hightlightsSorted[index] = {
+        ...hightlightsSorted[index],
+        note: item.nextElementSibling.nextElementSibling ?? undefined
+      }
+    }
+  });
+
+  return hightlightsSorted
+    .filter((item) => isHighlightValid(item.highlight))
+    .map((item) => mapToKindleHighlight(item));
 };
 
 const getBookTitle = (body: HTMLBodyElement | null): string | undefined => {
   // TODO ERROR Handling when body / Title undefined
-
   return body?.querySelector(".bookTitle")?.textContent?.trim();
 };
 
@@ -38,24 +56,28 @@ const getBookAuthors = (body: HTMLBodyElement | null): string[] | undefined => {
   return body?.querySelector(".authors")?.textContent?.split(";");
 };
 
-const mapToKindleHighlight = (item: HTMLElement, heading: Element | null): KindleHighlight => {
+const mapToKindleHighlight = (item: HtmlHighlight): KindleHighlight => {
   return {
-    text: getHighlightText(item),
-    color: getHighlightColor(heading),
-    page: getHighlightPage(heading),
-    location: getHightlightLocation(heading),
-    chapter: getHightlightChapter(heading),
+    text: getHighlightText(item.highlight),
+    color: getHighlightColor(item.header),
+    page: getHighlightPage(item.header),
+    location: getHightlightLocation(item.header),
+    chapter: getHightlightChapter(item.header),
+    note: getHightlightNote(item.note)
   };
 };
 
 const isHighlightValid = (item: HTMLElement): boolean => {
-
   const text = item.textContent?.trim();
 
   return (
     !!text &&
     text.length > 5
   );
+};
+
+const getHightlightNote = (item?: Element) => {
+  return item?.textContent ?? undefined;
 };
 
 const getHighlightColor = (item: Element | null): string | undefined => {
