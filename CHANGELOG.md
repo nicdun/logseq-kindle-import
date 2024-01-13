@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/nicdun/logseq-kindle-import/compare/v1.2.1...v1.2.2) (2024-01-13)
+
+
+### Bug Fixes
+
+* **export:** fix exporting logo for logseq plugin. ([5d2494f](https://github.com/nicdun/logseq-kindle-import/commit/5d2494f72e8d0e9598a34afcf8cc044998041697))
+
 ## [1.2.1](https://github.com/nicdun/logseq-kindle-import/compare/v1.2.0...v1.2.1) (2024-01-13)
 
 
