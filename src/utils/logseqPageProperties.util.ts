@@ -7,14 +7,13 @@ export const PROP_CREATED = "created";
 export const PROP_TYPE = "type";
 
 export const mapKindleDataToProperties = (
-  item: KindleBook
+  item: KindleBook,
 ): Record<string, string | undefined> => {
   const defaultProperties = {
     [PROP_TITLE]: item.title,
     [PROP_CREATED]: new Date().toISOString(),
     [PROP_TYPE]: "[[Book]]",
-    [PROP_AUTHOR]: item.authors?.map(item => `[[${item.trim()}]]`).join(",")
-
+    [PROP_AUTHOR]: item.authors?.map((item) => `[[${item.trim()}]]`).join(","),
   };
 
   //const pagePropertiesFromSettings: Record<string, string> | null =
@@ -26,7 +25,7 @@ export const mapKindleDataToProperties = (
   console.log(defaultProperties);
 
   return {
-    ...defaultProperties
+    ...defaultProperties,
   };
 };
 
@@ -39,7 +38,7 @@ const loadCustomPagePropertiesFromSettings = (): Record<
   } catch (e) {
     logseq.UI.showMsg(
       "Parsing custom page properties failed. Please update your pageProperties settings and provide a valid JSON string.",
-      "error"
+      "error",
     );
     return null;
   }

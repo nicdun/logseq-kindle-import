@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useMountedState } from './useMountedState';
+import { useEffect, useState } from "react";
+import { useMountedState } from "./useMountedState";
 
 export function useAppVisible() {
   const [visible, setVisible] = useState(logseq.isMainUIVisible);
   const isMounted = useMountedState();
-  
+
   useEffect(() => {
-    const eventName = 'ui:visible:changed';
+    const eventName = "ui:visible:changed";
     const handler = async ({ visible }: { visible: boolean }) => {
       if (isMounted()) {
         setVisible(visible);

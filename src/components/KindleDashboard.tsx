@@ -10,7 +10,7 @@ const KindleDashboard: FC<KindleDashboardProps> = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   const getHightlightsAndCreateLogseqPage = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): Promise<void> => {
     setShowSpinner(true);
 
@@ -19,7 +19,7 @@ const KindleDashboard: FC<KindleDashboardProps> = () => {
     if (!file) {
       logseq.UI.showMsg(
         "No file selected - please select correct kindle highlights file!",
-        "error"
+        "error",
       );
       setShowSpinner(false);
       return;
@@ -32,7 +32,7 @@ const KindleDashboard: FC<KindleDashboardProps> = () => {
     if (!book) {
       logseq.UI.showMsg(
         "Kindle highlights cannot be found - please select correct kindle highlights file!",
-        "error"
+        "error",
       );
       setShowSpinner(false);
       return;

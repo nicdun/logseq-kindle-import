@@ -15,7 +15,7 @@ function main() {
   root.render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 
   logseq.provideModel({

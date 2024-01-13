@@ -1,5 +1,5 @@
 export type HtmlHighlight = {
-    highlight: HTMLElement;
-    header: Element;
-    note?: Element;
-}
+  highlight: HTMLElement;
+  header: Element;
+  note?: Element;
+};

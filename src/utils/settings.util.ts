@@ -25,7 +25,7 @@ const config: SettingSchemaDesc[] = [
     key: "syncNotes",
     title: "Sync notes",
     type: "boolean",
-  }
+  },
 ];
 
 /**
@@ -33,10 +33,10 @@ const config: SettingSchemaDesc[] = [
  */
 export const settings = {
   accessToken: (): string => logseq.settings!["accessToken"] as string,
-  highlight: (): string => logseq.settings!["templateHighlight"]  as string,
+  highlight: (): string => logseq.settings!["templateHighlight"] as string,
   pagePrefix: (): string => logseq.settings!["pagePrefix"] as string,
   pageProperties: (): string => logseq.settings!["pageProperties"] as string,
-  syncNotes: (): boolean => logseq.settings!["syncNotes"] as boolean
+  syncNotes: (): boolean => logseq.settings!["syncNotes"] as boolean,
 };
 
 /**

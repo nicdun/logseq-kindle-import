@@ -26,18 +26,18 @@ const getKindleHighlights = (highlights: HTMLElement[]): KindleHighlight[] => {
   const hightlightsSorted: HtmlHighlight[] = [];
 
   highlights.forEach((item, index) => {
-    if(item.previousElementSibling?.innerHTML.includes('Highlight')) {
+    if (item.previousElementSibling?.innerHTML.includes("Highlight")) {
       hightlightsSorted[index] = {
         highlight: item,
-        header: item.previousElementSibling
+        header: item.previousElementSibling,
       };
     }
 
-    if(item.nextElementSibling?.innerHTML.includes('Note')) {
+    if (item.nextElementSibling?.innerHTML.includes("Note")) {
       hightlightsSorted[index] = {
         ...hightlightsSorted[index],
-        note: item.nextElementSibling.nextElementSibling ?? undefined
-      }
+        note: item.nextElementSibling.nextElementSibling ?? undefined,
+      };
     }
   });
 
@@ -63,17 +63,14 @@ const mapToKindleHighlight = (item: HtmlHighlight): KindleHighlight => {
     page: getHighlightPage(item.header),
     location: getHightlightLocation(item.header),
     chapter: getHightlightChapter(item.header),
-    note: getHightlightNote(item.note)
+    note: getHightlightNote(item.note),
   };
 };
 
 const isHighlightValid = (item: HTMLElement): boolean => {
   const text = item.textContent?.trim();
 
-  return (
-    !!text &&
-    text.length > 5
-  );
+  return !!text && text.length > 5;
 };
 
 const getHightlightNote = (item?: Element) => {
@@ -84,7 +81,6 @@ const getHighlightColor = (item: Element | null): string | undefined => {
   return item?.querySelector("span")?.innerHTML;
 };
 
-
 const getHighlightText = (item: HTMLElement): string => {
   return item.textContent!.trim();
 };
@@ -92,7 +88,7 @@ const getHighlightText = (item: HTMLElement): string => {
 const getHighlightPage = (item: Element | null): string | undefined => {
   const text = item?.textContent?.trim();
 
-  if(!text || text.indexOf("Page") < 0) {
+  if (!text || text.indexOf("Page") < 0) {
     return;
   }
 
@@ -105,7 +101,6 @@ const getHightlightLocation = (item: Element | null): string | undefined => {
     ? text.substring(text.indexOf("Location") + 8, text.length).trim()
     : undefined;
 };
-
 
 const getHightlightChapter = (item: Element | null): string | undefined => {
   const text = item?.textContent?.trim();

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 export function useMountedState(): () => boolean {
   const mountedRef = useRef<boolean>(false);

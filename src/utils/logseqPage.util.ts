@@ -20,10 +20,10 @@ export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
 
 const createOrLoadLogseqPage = async (
   item: KindleBook,
-  prefix: string
+  prefix: string,
 ): Promise<void> => {
   const existingPage: LogseqPageEntity | null = await getPageByTitle(
-    item.title!
+    item.title!,
   );
   const pageProperties = mapKindleDataToProperties(item);
 
@@ -32,7 +32,7 @@ const createOrLoadLogseqPage = async (
   if (existingPage) {
     logseq.UI.showMsg(
       "Page already imported - Please delete page and reimport highlights!",
-      "error"
+      "error",
     );
     logseq.App.pushState("page", { name: title });
     return;
@@ -58,10 +58,10 @@ const createOrLoadLogseqPage = async (
 };
 
 const getPageByTitle = async (
-  title: string
+  title: string,
 ): Promise<LogseqPageEntity | null> => {
   const pages: LogseqPageEntity[] | null = await logseq.DB.q(
-    `(page-property ${PROP_TITLE} "${title}")`
+    `(page-property ${PROP_TITLE} "${title}")`,
   );
 
   if (!pages) {
@@ -75,7 +75,7 @@ const getPageByTitle = async (
       return pages[0];
     default:
       const sortedPagesByUpdatedAt: LogseqPageEntity[] = pages.sort(
-        (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt
+        (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt,
       );
 
       return sortedPagesByUpdatedAt[0];

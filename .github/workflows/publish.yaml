@@ -12,20 +12,20 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version-file: '.nvmrc'
-    - name: install dependencies
-      run: |
-        npm install
-    - name: build and test
-      run: |
-        npm run build
-    - name: Install zip
-      uses: montudor/action-zip@v1
-    - name: Release
-      run: npx semantic-release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+      - name: install dependencies
+        run: |
+          npm install
+      - name: build and test
+        run: |
+          npm run build
+      - name: Install zip
+        uses: montudor/action-zip@v1
+      - name: Release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

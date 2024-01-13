@@ -4,10 +4,10 @@ import { settings } from "./settings.util";
 
 export const createPagePropertiesBlock = async (
   block: BlockEntity,
-  properties: Record<string, string | undefined>
+  properties: Record<string, string | undefined>,
 ): Promise<void> => {
   Object.entries(properties).map(async ([key, value]) => {
-    if(value) {
+    if (value) {
       await logseq.Editor.upsertBlockProperty(block.uuid, key, value);
     }
   });
@@ -26,14 +26,15 @@ export const updateBlockState = async (block: BlockEntity): Promise<void> => {
   });
 };
 
-export const createBlockOnCurrentPage = (uuid: string, highlight: KindleHighlight): Promise<BlockEntity | null> => {
-  return logseq.Editor.appendBlockInPage(
-    uuid,
-    `${highlight.text}`,
-    { properties: { 
-      ...(highlight.page && {page: highlight.page}), 
-      ...(highlight.location && { location: highlight.location}),
-      ...((highlight.note && settings.syncNotes()) && { note: highlight.note })
-     } }
-  );
-}
+export const createBlockOnCurrentPage = (
+  uuid: string,
+  highlight: KindleHighlight,
+): Promise<BlockEntity | null> => {
+  return logseq.Editor.appendBlockInPage(uuid, `${highlight.text}`, {
+    properties: {
+      ...(highlight.page && { page: highlight.page }),
+      ...(highlight.location && { location: highlight.location }),
+      ...(highlight.note && settings.syncNotes() && { note: highlight.note }),
+    },
+  });
+};
