@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/nicdun/logseq-kindle-import/compare/v1.2.0...v1.2.1) (2024-01-13)
+
+
+### Bug Fixes
+
+* **properties:** fix generation of page properties. ([3bfdda4](https://github.com/nicdun/logseq-kindle-import/commit/3bfdda4a26a965d90b49d247f404e825c333f027))
+
 # [1.2.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.1.1...v1.2.0) (2024-01-13)
 
 
