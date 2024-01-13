@@ -17,10 +17,6 @@ export const updateBlockState = async (block: BlockEntity): Promise<void> => {
   const properties = await logseq.Editor.getBlockProperties(block.uuid);
   const content = (await logseq.Editor.getBlock(block.uuid))!.content;
 
-  await logseq.Editor.updateBlock(block.uuid, "Updating props...", {
-    properties: properties,
-  });
-
   await logseq.Editor.updateBlock(block.uuid, content, {
     properties: properties,
   });
