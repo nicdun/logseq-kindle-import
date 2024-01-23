@@ -3,25 +3,31 @@ import { KindleBook } from "../models/KindleBook";
 import { generateLogseqPage } from "../utils/logseqPage.util";
 import { parseKindleData } from "../utils/parsing.util";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { sendNotification } from "../utils/logseqNotification.util";
 
 interface KindleDashboardProps {}
 
 const KindleDashboard: FC<KindleDashboardProps> = () => {
   const [showSpinner, setShowSpinner] = useState(false);
+  const [feedbackIcon, setFeedbackIcon] = useState();
 
   const getHightlightsAndCreateLogseqPage = async (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
     setShowSpinner(true);
-
     const file = event.target.files![0];
 
     if (!file) {
-      logseq.UI.showMsg(
-        "No file selected - please select correct kindle highlights file!",
-        "error",
+      sendErrorNotification(
+        "No file selected - please select correct kindle highlights file!"
       );
-      setShowSpinner(false);
+      return;
+    }
+
+    if (!file.name.endsWith(".html")) {
+      sendErrorNotification(
+        "Wrong file type selected - you need to export your highlights in .html-format!"
+      );
       return;
     }
 
@@ -30,15 +36,18 @@ const KindleDashboard: FC<KindleDashboardProps> = () => {
     const book: KindleBook | null = parseKindleData(text);
 
     if (!book) {
-      logseq.UI.showMsg(
-        "Kindle highlights cannot be found - please select correct kindle highlights file!",
-        "error",
+      sendErrorNotification(
+        "Kindle highlights cannot be found - please select correct kindle highlights file!"
       );
-      setShowSpinner(false);
       return;
     }
 
     await generateLogseqPage(book!);
+    setShowSpinner(false);
+  };
+
+  const sendErrorNotification = (message: string) => {
+    sendNotification(message, "error");
     setShowSpinner(false);
   };
 

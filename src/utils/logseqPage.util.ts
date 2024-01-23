@@ -12,6 +12,7 @@ import {
 import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
 import { LogseqPageEntity } from "../models/LogseqPageEntity";
 import { KindleBook } from "../models/KindleBook";
+import { sendNotification } from "./logseqNotification.util";
 
 export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
   const prefix = settings.pagePrefix();
@@ -30,9 +31,9 @@ const createOrLoadLogseqPage = async (
   const title = `${prefix ? prefix + "/" : ""}${item.title}`;
 
   if (existingPage) {
-    logseq.UI.showMsg(
+    sendNotification(
       "Page already imported - Please delete page and reimport highlights!",
-      "error",
+      "error"
     );
     logseq.App.pushState("page", { name: title });
     return;
@@ -54,7 +55,7 @@ const createOrLoadLogseqPage = async (
     await createBlockOnCurrentPage(currentPage!.uuid, highlight);
   }
 
-  logseq.UI.showMsg("Import successfull!", "success");
+  sendNotification("Import successfull!", "success");
 };
 
 const getPageByTitle = async (
