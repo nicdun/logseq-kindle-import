@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.2.2...v1.3.0) (2024-01-23)
+
+
+### Features
+
+* **file restriction:** only allow html files to be imported. ([#275](https://github.com/nicdun/logseq-kindle-import/issues/275)) ([2d17f87](https://github.com/nicdun/logseq-kindle-import/commit/2d17f87440b117b66cc0c033a40077faa16ca047))
+
 ## [1.2.2](https://github.com/nicdun/logseq-kindle-import/compare/v1.2.1...v1.2.2) (2024-01-13)
 
 
