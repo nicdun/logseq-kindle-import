@@ -19,39 +19,36 @@ export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
   return createOrLoadLogseqPage(item, prefix);
 };
 
+const getHighlightFromBlock = (
+  block: BlockEntity
+): string => {
+  const lines = block.content.split('\n').slice(0, -Object.entries(block.properties!).length);
+  return lines.join('\n');
+};
+
 const createOrLoadLogseqPage = async (
   item: KindleBook,
   prefix: string,
 ): Promise<void> => {
-  const existingPage: LogseqPageEntity | null = await getPageByTitle(
-    item.title!,
-  );
   const pageProperties = mapKindleDataToProperties(item);
 
   const title = `${prefix ? prefix + "/" : ""}${item.title}`;
 
-  if (existingPage) {
-    sendNotification(
-      "Page already imported - Please delete page and reimport highlights!",
-      "error"
-    );
-    logseq.App.pushState("page", { name: title });
-    return;
-  } else {
-    await logseq.Editor.createPage(title);
-    logseq.App.pushState("page", { name: title });
-  }
+  await logseq.Editor.createPage(title);
+  logseq.App.pushState("page", { name: title });
 
-  const firstBlockOnPage: BlockEntity = (
-    await logseq.Editor.getCurrentPageBlocksTree()
-  )[0];
+  const currentPage = await logseq.Editor.getCurrentPage();
+  const blocksTree = await logseq.Editor.getPageBlocksTree(currentPage!.uuid);
+  const firstBlockOnPage: BlockEntity = blocksTree[0];
 
   createPagePropertiesBlock(firstBlockOnPage, pageProperties);
   updateBlockState(firstBlockOnPage);
 
-  const currentPage = await logseq.Editor.getCurrentPage();
+  // filter highlights to only new ones
+  const existingContents = new Set(blocksTree.slice(1).map(getHighlightFromBlock));
+  const newHighlights = item.highlights.filter(highlight => !existingContents.has(highlight.text));
 
-  for (const highlight of item.highlights) {
+  for (const highlight of newHighlights) {
     await createBlockOnCurrentPage(currentPage!.uuid, highlight);
   }
 
