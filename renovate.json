@@ -1,18 +1,30 @@
 {
-  "extends": ["config:base", ":dependencyDashboard"],
-  "schedule": ["before 2am"],
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "schedule": [
+    "before 2am"
+  ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["before 2am"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "schedule": [
+        "before 2am"
+      ],
       "automerge": true,
-      "requiredStatusChecks": null
+      "ignoreTests": true
     },
     {
-      "matchPackageNames": ["@logseq/libs"],
+      "matchPackageNames": [
+        "@logseq/libs"
+      ],
       "ignoreUnstable": false,
       "automerge": false,
-      "requiredStatusChecks": null
+      "ignoreTests": true
     }
   ]
 }
