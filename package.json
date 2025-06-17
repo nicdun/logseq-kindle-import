@@ -12,8 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@logseq/libs": "^0.0.17",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.3",
@@ -21,8 +21,8 @@
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "12.0.1",
     "@types/node": "20.19.1",
-    "@types/react": "18.3.23",
-    "@types/react-dom": "18.3.7",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "@vitejs/plugin-react": "4.5.2",
@@ -30,7 +30,7 @@
     "conventional-changelog-conventionalcommits": "7.0.2",
     "eslint": "8.57.1",
     "eslint-plugin-react": "7.37.5",
-    "eslint-plugin-react-hooks": "4.6.2",
+    "eslint-plugin-react-hooks": "5.2.0",
     "postcss": "8.5.6",
     "prettier": "3.5.3",
     "semantic-release": "23.1.1",
