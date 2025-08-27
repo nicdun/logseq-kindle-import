@@ -7,10 +7,10 @@ export const parseKindleData = (content: string): KindleBook | null => {
   dummyDom.innerHTML = content;
 
   const body = dummyDom.querySelector("body");
-  const highlights: NodeListOf<HTMLElement> =
-    body?.querySelectorAll(".noteText")!;
+  const headings: NodeListOf<HTMLElement> =
+    body?.querySelectorAll(".noteHeading")!;
   const kindleBook: KindleBook = {
-    highlights: getKindleHighlights(Array.from(highlights)),
+    highlights: getKindleHighlights(Array.from(headings)),
     title: getBookTitle(body),
     authors: getBookAuthors(body),
   };
@@ -22,26 +22,34 @@ export const parseKindleData = (content: string): KindleBook | null => {
   return kindleBook;
 };
 
-const getKindleHighlights = (highlights: HTMLElement[]): KindleHighlight[] => {
-  const hightlightsSorted: HtmlHighlight[] = [];
+const getKindleHighlights = (headings: HTMLElement[]): KindleHighlight[] => {
+  const processedHighlights: HtmlHighlight[] = [];
 
-  highlights.forEach((item, index) => {
-    if (item.previousElementSibling?.innerHTML.includes("Highlight")) {
-      hightlightsSorted[index] = {
-        highlight: item,
-        header: item.previousElementSibling,
+  for (let i = 0; i < headings.length; i++) {
+    const currentHeading = headings[i];
+    
+    // Check if the current heading is a highlight
+    if (currentHeading.textContent?.includes("Highlight")) {
+      // Create a new HtmlHighlight object
+      const htmlHighlight: HtmlHighlight = {
+        header: currentHeading,
+        highlight: currentHeading.nextElementSibling as HTMLElement,
       };
-    }
 
-    if (item.nextElementSibling?.innerHTML.includes("Note")) {
-      hightlightsSorted[index] = {
-        ...hightlightsSorted[index],
-        note: item.nextElementSibling.nextElementSibling ?? undefined,
-      };
-    }
-  });
+      // Check for an associated note in the next heading
+      const nextHeading = headings[i + 1];
+      if (nextHeading && nextHeading.textContent?.includes("Note")) {
+        htmlHighlight.note = nextHeading.nextElementSibling ?? undefined;
+        // Skip the note heading in the next iteration
+        i++;
+      }
 
-  return hightlightsSorted
+      // Add the complete highlight to the processed list
+      processedHighlights.push(htmlHighlight);
+    }
+  }
+
+  return processedHighlights
     .filter((item) => isHighlightValid(item.highlight))
     .map((item) => mapToKindleHighlight(item));
 };
