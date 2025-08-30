@@ -5,9 +5,7 @@ import { generateLogseqPage } from "../utils/logseqPage.util";
 import { parseKindleData } from "../utils/parsing.util";
 import { LoadingSpinner } from "./LoadingSpinner";
 
-interface KindleDashboardProps {}
-
-const KindleDashboard: FC<KindleDashboardProps> = () => {
+const KindleDashboard: FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   const getHightlightsAndCreateLogseqPage = async (
@@ -41,7 +39,7 @@ const KindleDashboard: FC<KindleDashboardProps> = () => {
       return;
     }
 
-    await generateLogseqPage(book!);
+    await generateLogseqPage(book);
     setShowSpinner(false);
   };
 

@@ -75,10 +75,10 @@ const getPageByTitle = async (
     case 1:
       return pages[0];
     default:
-      const sortedPagesByUpdatedAt: LogseqPageEntity[] = pages.sort(
+      pages.sort(
         (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt
       );
 
-      return sortedPagesByUpdatedAt[0];
+      return pages[0];
   }
 };
