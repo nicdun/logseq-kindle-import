@@ -1,6 +1,6 @@
 {
   "name": "logseq-kindle-integration",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "nicodun",
   "repo": "https://github.com/nicdun/logseq-kindle-import",
   "description": "Integrate all your Kindle highlights as a page.",
