@@ -29,3 +29,5 @@ If you find that something isn't working right then I'm always happy to hear it 
 
 ## ☕ Thank you!
 A big thank you to the creators of the awesome logseq application :)
+
+<a href="https://www.buymeacoffee.com/nicdun" rel="nofollow"><img src="https://user-images.githubusercontent.com/3909046/150683481-be070424-7bb0-4dd7-a3cb-43b5605163f5.png" alt="buymeacoffee-button" style="max-width: 100%;"></a>

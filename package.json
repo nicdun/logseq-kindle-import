@@ -7,7 +7,9 @@
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "test": "vitest run",
+    "test:ui": "vitest"
   },
   "license": "MIT",
   "dependencies": {
@@ -20,27 +22,31 @@
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "12.0.2",
+    "@types/jsdom": "^21.1.7",
     "@types/node": "20.19.10",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "@vitejs/plugin-react": "4.7.0",
+    "@vitest/ui": "^3.2.4",
     "autoprefixer": "10.4.21",
     "conventional-changelog-conventionalcommits": "7.0.2",
     "eslint": "8.57.1",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "4.6.2",
+    "jsdom": "^26.1.0",
     "postcss": "8.5.6",
     "prettier": "3.6.2",
     "semantic-release": "23.1.1",
     "tailwindcss": "3.4.17",
     "typescript": "5.9.2",
     "vite": "5.4.19",
-    "vite-plugin-logseq": "1.1.2"
+    "vite-plugin-logseq": "1.1.2",
+    "vitest": "^3.2.4"
   },
   "logseq": {
-    "id": "logseq-kindle-import",
+    "id": "logseq-kindle-import-dev",
     "title": "Kindle Highlights Import",
     "icon": "./assets/kindle-logo.png"
   }

@@ -20,7 +20,10 @@ jobs:
       - name: install dependencies
         run: |
           npm install
-      - name: build and test
+      - name: test
+        run: |
+          npm run test
+      - name: build
         run: |
           npm run build
       - name: Install zip
