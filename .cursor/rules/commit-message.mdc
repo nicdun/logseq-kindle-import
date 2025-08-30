@@ -5,30 +5,95 @@ alwaysApply: false
 ---
 # Commit
 
-Create well-formatted commits with conventional commit messages and emojis.
+Create well-formatted commits that comply with Conventional Commits v1.0.0 and pass `@commitlint/config-conventional`.
 
 ## Features:
 - Runs pre-commit checks by default (lint, build, generate docs)
 - Automatically stages files if none are staged
-- Uses conventional commit format with descriptive emojis
+- Uses the Conventional Commits format and validates message structure
 - Suggests splitting commits for different concerns
 
 ## Usage:
 - `/commit` - Standard commit with pre-commit checks
 - `/commit --no-verify` - Skip pre-commit checks
 
-## Commit Types:
-- feat: New features
-- fix: Bug fixes
-- docs: Documentation changes
-- refactor: Code restructuring without changing functionality
-- style: Code formatting, missing semicolons, etc.
-- perf: Performance improvements
+## Message Format
+
+```
+<type>[optional scope][!]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Unified Rules (Spec + Commitlint)
+1. Start with `type[optional scope][!]: subject`.
+2. `type` MUST be lower-case and one of: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`.
+3. Use `feat` for new features; use `fix` for bug fixes.
+4. `scope` MAY be provided in parentheses and SHOULD be lower-case (e.g., `fix(parser):`).
+5. `subject` MUST be present, written in imperative mood, and SHOULD NOT end with a period.
+6. Keep header length ≤ 72 characters where practical.
+7. If a body is present, it MUST be separated by a blank line; body is free-form.
+8. If footers are present, they MUST be separated by a blank line; use tokens like `Refs`, `Closes`, `Reviewed-by`.
+9. Footer tokens MUST use `-` instead of spaces, except `BREAKING CHANGE`, which MAY contain a space. `BREAKING-CHANGE` is synonymous with `BREAKING CHANGE`.
+10. Breaking changes MUST be indicated either by `!` in the header or by a `BREAKING CHANGE:` footer. If `!` is used, the subject SHOULD describe the breaking change.
+
+### Types
+- feat: Introduces a new feature (MINOR)
+- fix: Patches a bug (PATCH)
+- build: Build system or external dependencies
+- chore: Other changes that don’t modify src or test files
+- ci: CI configuration files and scripts
+- docs: Documentation only changes
+- perf: Improves performance without functional change
+- refactor: Code change that neither fixes a bug nor adds a feature
+- revert: Reverts a previous commit
+- style: Changes that do not affect the meaning of the code
 - test: Adding or correcting tests
-- chore: Tooling, configuration, maintenance
-- wip: Work in progress
-- remove: Removing code or files
-- security: Security improvements
+
+### Breaking Changes
+- Indicate with `!` after type/scope, e.g., `feat(api)!: ...`, or add a footer:
+  - `BREAKING CHANGE: <description>`
+- `BREAKING-CHANGE` is synonymous with `BREAKING CHANGE` in footers.
+
+### Canonical Examples
+```
+feat: allow provided config object to extend other configs
+
+BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+```
+
+```
+feat!: send an email to the customer when a product is shipped
+```
+
+```
+feat(api)!: send an email to the customer when a product is shipped
+```
+
+```
+chore!: drop support for Node 6
+
+BREAKING CHANGE: use JavaScript features not available in Node 6.
+```
+
+```
+docs: correct spelling of CHANGELOG
+```
+
+```
+fix: prevent racing of requests
+
+Introduce a request id and a reference to latest request. Dismiss
+incoming responses other than from latest request.
+
+Remove timeouts which were used to mitigate the racing issue but are
+obsolete now.
+
+Reviewed-by: Z
+Refs: #123
+```
 
 ## Process:
 1. Check for staged changes (`git status`)
@@ -38,7 +103,17 @@ Create well-formatted commits with conventional commit messages and emojis.
 5. Generate descriptive commit message
 6. Include scope if applicable: `type(scope): description`
 7. Add body for complex changes explaining why
-8. Execute commit
+8. Add footers (e.g., `BREAKING CHANGE:`) if needed
+9. Execute commit
+
+## Quick Validation Checklist
+- [ ] Type is allowed and lower-case
+- [ ] Optional scope is lower-case and in parentheses
+- [ ] Subject present, imperative, no trailing period
+- [ ] Header ideally ≤ 72 chars
+- [ ] Blank line before body (if any)
+- [ ] Blank line before footer(s) (if any)
+- [ ] Breaking change indicated via `!` or `BREAKING CHANGE:` footer
 
 ## Best Practices:
 - Keep commits atomic and focused
@@ -46,3 +121,9 @@ Create well-formatted commits with conventional commit messages and emojis.
 - Explain why, not just what
 - Reference issues/PRs when relevant
 - Split unrelated changes into separate commits
+- Prefer recognized types; avoid nonstandard types that hinder tooling
+- Follow the spec for breaking changes and footers; prefer concise, clear subjects
+
+References:
+- Conventional Commits 1.0.0 — https://www.conventionalcommits.org/en/v1.0.0/
+- @commitlint/config-conventional — https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional

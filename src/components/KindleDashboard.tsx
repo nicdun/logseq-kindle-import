@@ -1,15 +1,14 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { KindleBook } from "../models/KindleBook";
+import { sendNotification } from "../utils/logseqNotification.util";
 import { generateLogseqPage } from "../utils/logseqPage.util";
 import { parseKindleData } from "../utils/parsing.util";
 import { LoadingSpinner } from "./LoadingSpinner";
-import { sendNotification } from "../utils/logseqNotification.util";
 
 interface KindleDashboardProps {}
 
 const KindleDashboard: FC<KindleDashboardProps> = () => {
   const [showSpinner, setShowSpinner] = useState(false);
-  const [feedbackIcon, setFeedbackIcon] = useState();
 
   const getHightlightsAndCreateLogseqPage = async (
     event: React.ChangeEvent<HTMLInputElement>

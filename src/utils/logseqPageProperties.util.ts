@@ -1,5 +1,4 @@
 import { KindleBook } from "../models/KindleBook";
-import { settings } from "./settings.util";
 
 export const PROP_TITLE = "title";
 export const PROP_AUTHOR = "author";
@@ -7,7 +6,7 @@ export const PROP_CREATED = "created";
 export const PROP_TYPE = "type";
 
 export const mapKindleDataToProperties = (
-  item: KindleBook,
+  item: KindleBook
 ): Record<string, string | undefined> => {
   const defaultProperties = {
     [PROP_TITLE]: item.title,
@@ -29,17 +28,17 @@ export const mapKindleDataToProperties = (
   };
 };
 
-const loadCustomPagePropertiesFromSettings = (): Record<
-  string,
-  string
-> | null => {
-  try {
-    return JSON.parse(settings.pageProperties());
-  } catch (e) {
-    logseq.UI.showMsg(
-      "Parsing custom page properties failed. Please update your pageProperties settings and provide a valid JSON string.",
-      "error",
-    );
-    return null;
-  }
-};
+// const loadCustomPagePropertiesFromSettings = (): Record<
+//   string,
+//   string
+// > | null => {
+//   try {
+//     return JSON.parse(settings.pageProperties());
+//   } catch (e) {
+//     logseq.UI.showMsg(
+//       "Parsing custom page properties failed. Please update your pageProperties settings and provide a valid JSON string.",
+//       "error",
+//     );
+//     return null;
+//   }
+// };

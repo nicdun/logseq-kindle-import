@@ -1,18 +1,18 @@
 import "@logseq/libs";
-import { settings } from "./settings.util";
-import {
-  mapKindleDataToProperties,
-  PROP_TITLE,
-} from "./logseqPageProperties.util";
+import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
+import { KindleBook } from "../models/KindleBook";
+import { LogseqPageEntity } from "../models/LogseqPageEntity";
 import {
   createBlockOnCurrentPage,
   createPagePropertiesBlock,
   updateBlockState,
 } from "./logseqBlock.util";
-import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
-import { LogseqPageEntity } from "../models/LogseqPageEntity";
-import { KindleBook } from "../models/KindleBook";
 import { sendNotification } from "./logseqNotification.util";
+import {
+  mapKindleDataToProperties,
+  PROP_TITLE,
+} from "./logseqPageProperties.util";
+import { settings } from "./settings.util";
 
 export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
   const prefix = settings.pagePrefix();
@@ -21,10 +21,10 @@ export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
 
 const createOrLoadLogseqPage = async (
   item: KindleBook,
-  prefix: string,
+  prefix: string
 ): Promise<void> => {
   const existingPage: LogseqPageEntity | null = await getPageByTitle(
-    item.title!,
+    item.title!
   );
   const pageProperties = mapKindleDataToProperties(item);
 
@@ -59,10 +59,10 @@ const createOrLoadLogseqPage = async (
 };
 
 const getPageByTitle = async (
-  title: string,
+  title: string
 ): Promise<LogseqPageEntity | null> => {
   const pages: LogseqPageEntity[] | null = await logseq.DB.q(
-    `(page-property ${PROP_TITLE} "${title}")`,
+    `(page-property ${PROP_TITLE} "${title}")`
   );
 
   if (!pages) {
@@ -76,7 +76,7 @@ const getPageByTitle = async (
       return pages[0];
     default:
       const sortedPagesByUpdatedAt: LogseqPageEntity[] = pages.sort(
-        (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt,
+        (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt
       );
 
       return sortedPagesByUpdatedAt[0];
