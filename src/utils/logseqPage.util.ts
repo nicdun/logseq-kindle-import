@@ -1,18 +1,21 @@
 import "@logseq/libs";
-import { settings } from "./settings.util";
+import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
+import { KindleBook } from "../models/KindleBook";
+import { LogseqPageEntity } from "../models/LogseqPageEntity";
+import {
+  createBlockOnCurrentPage,
+  createChildHighlightBlock,
+  createHeadingBlockOnCurrentPage,
+  createPagePropertiesBlock,
+  updateBlockState,
+} from "./logseqBlock.util";
+import { sendNotification } from "./logseqNotification.util";
 import {
   mapKindleDataToProperties,
   PROP_TITLE,
 } from "./logseqPageProperties.util";
-import {
-  createBlockOnCurrentPage,
-  createPagePropertiesBlock,
-  updateBlockState,
-} from "./logseqBlock.util";
-import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
-import { LogseqPageEntity } from "../models/LogseqPageEntity";
-import { KindleBook } from "../models/KindleBook";
-import { sendNotification } from "./logseqNotification.util";
+import { settings } from "./settings.util";
+import { KindleHighlight } from "../models/KindleHighlight";
 
 export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
   const prefix = settings.pagePrefix();
@@ -21,10 +24,10 @@ export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
 
 const createOrLoadLogseqPage = async (
   item: KindleBook,
-  prefix: string,
+  prefix: string
 ): Promise<void> => {
   const existingPage: LogseqPageEntity | null = await getPageByTitle(
-    item.title!,
+    item.title!
   );
   const pageProperties = mapKindleDataToProperties(item);
 
@@ -50,19 +53,35 @@ const createOrLoadLogseqPage = async (
   updateBlockState(firstBlockOnPage);
 
   const currentPage = await logseq.Editor.getCurrentPage();
+  if (!currentPage) return;
 
-  for (const highlight of item.highlights) {
-    await createBlockOnCurrentPage(currentPage!.uuid, highlight);
+  const shouldGroup = settings.groupBySectionHeader();
+  if (!shouldGroup) {
+    for (const highlight of item.highlights) {
+      await createBlockOnCurrentPage(currentPage.uuid, highlight);
+    }
+  } else {
+    const groups = groupHighlightsByChapter(item.highlights);
+    for (const [chapter, highlights] of groups) {
+      const headingBlock = await createHeadingBlockOnCurrentPage(
+        currentPage.uuid,
+        chapter ?? "(No chapter)"
+      );
+      const parentUuid = headingBlock?.uuid ?? currentPage.uuid;
+      for (const h of highlights) {
+        await createChildHighlightBlock(parentUuid, h);
+      }
+    }
   }
 
   sendNotification("Import successfull!", "success");
 };
 
 const getPageByTitle = async (
-  title: string,
+  title: string
 ): Promise<LogseqPageEntity | null> => {
   const pages: LogseqPageEntity[] | null = await logseq.DB.q(
-    `(page-property ${PROP_TITLE} "${title}")`,
+    `(page-property ${PROP_TITLE} "${title}")`
   );
 
   if (!pages) {
@@ -75,10 +94,23 @@ const getPageByTitle = async (
     case 1:
       return pages[0];
     default:
-      const sortedPagesByUpdatedAt: LogseqPageEntity[] = pages.sort(
-        (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt,
+      pages.sort(
+        (a: LogseqPageEntity, b: LogseqPageEntity) => a.createdAt - b.createdAt
       );
 
-      return sortedPagesByUpdatedAt[0];
+      return pages[0];
   }
+};
+
+const groupHighlightsByChapter = (
+  highlights: KindleHighlight[]
+): Map<string | undefined, KindleHighlight[]> => {
+  const groups = new Map<string | undefined, KindleHighlight[]>();
+  for (const h of highlights) {
+    const key = h.chapter;
+    const bucket = groups.get(key) ?? [];
+    bucket.push(h);
+    groups.set(key, bucket);
+  }
+  return groups;
 };

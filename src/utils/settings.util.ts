@@ -26,6 +26,14 @@ const config: SettingSchemaDesc[] = [
     title: "Sync notes",
     type: "boolean",
   },
+  {
+    default: "true",
+    description:
+      "When enabled, group highlights by their section headings (chapters) and add a '##' heading block for each chapter.",
+    key: "groupBySectionHeader",
+    title: "Group highlights by chapter (add section headings)",
+    type: "boolean",
+  },
 ];
 
 /**
@@ -37,6 +45,8 @@ export const settings = {
   pagePrefix: (): string => logseq.settings!["pagePrefix"] as string,
   pageProperties: (): string => logseq.settings!["pageProperties"] as string,
   syncNotes: (): boolean => logseq.settings!["syncNotes"] as boolean,
+  groupBySectionHeader: (): boolean =>
+    logseq.settings!["groupBySectionHeader"] as boolean,
 };
 
 /**

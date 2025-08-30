@@ -1,6 +1,7 @@
-const pluginName = require("./package.json").name;
+import pkg from "./package.json" assert { type: "json" };
+const pluginName = pkg.name;
 
-module.exports = {
+export default {
   branches: "main",
   plugins: [
     "@semantic-release/commit-analyzer",

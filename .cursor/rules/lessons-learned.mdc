@@ -1,0 +1,178 @@
+---
+alwaysApply: true
+---
+
+# Lessons Learned - Kindle Parsing Bug Fix
+
+## Character Encoding Issues
+
+### Problem
+- HTML content from Kindle exports contains special characters that don't match test expectations
+- Non-breaking spaces (`&nbsp;` / `\u00A0`) appear identical to regular spaces but are different characters
+- Curly quotes (`'` / `"`) vs straight quotes (`'` / `"`)
+- En/em dashes (`–` / `—`) vs regular hyphens (`-`)
+
+### Solution
+- Always implement text normalization for HTML parsing
+- Create a `normalizeText()` function that handles common character encoding differences
+- Apply normalization to both content text and metadata (chapter names, etc.)
+
+### Code Pattern
+```typescript
+const normalizeText = (text: string): string => {
+  return text
+    .replace(/\u00A0/g, " ") // Non-breaking spaces
+    .replace(/\u2019/g, "'") // Curly single quotes
+    .replace(/\u2018/g, "'") // Curly single quotes
+    .replace(/\u201D/g, '"') // Curly double quotes
+    .replace(/\u201C/g, '"') // Curly double quotes
+    .replace(/\u2013/g, "-") // En dashes
+    .replace(/\u2014/g, "-") // Em dashes
+    .trim();
+};
+```
+
+## Testing Best Practices
+
+### Always Test Features/Fixes
+- **Never skip testing** - every feature or fix must have corresponding tests
+- **Test with real data** - use actual HTML fixtures from different languages/formats
+- **Test edge cases** - empty content, missing elements, malformed HTML
+- **Test character encoding** - especially for international content
+
+### Test Structure
+- Test the first N items (e.g., first 5 highlights) to ensure parsing works consistently
+- Validate all fields: text, color, page, location, chapter, notes
+- Test both positive cases (valid data) and negative cases (missing/invalid data)
+
+### Test Setup
+- Use Vitest with jsdom environment for DOM parsing tests
+- Disable plugins that conflict with test environment (e.g., logseq plugin)
+- Use absolute paths for fixture files to avoid path resolution issues
+
+## Parsing Robustness
+
+### Language Agnostic Design
+- Don't rely on specific text strings like "Highlight" or "Note"
+- Use structural elements (CSS classes, DOM hierarchy) for identification
+- Support multilingual labels for page numbers, locations, etc.
+
+### Error Handling
+- Always check for null/undefined before accessing properties
+- Use optional chaining (`?.`) instead of non-null assertions (`!`)
+- Provide fallback values for missing data
+
+### DOM Navigation
+- Use `nextElementSibling` and `previousElementSibling` for related content
+- Check element classes rather than text content for identification
+- Handle cases where expected elements might be missing
+
+## Code Quality
+
+### Linting
+- Always run linter after making changes
+- Fix regex usage (use `exec()` instead of `match()`)
+- Remove unnecessary type assertions
+- Use optional chaining where appropriate
+
+### Documentation
+- Document complex parsing logic with comments
+- Explain the reasoning behind structural decisions
+- Note language-specific considerations
+
+## Key Takeaways
+
+1. **Character encoding is critical** for international content
+2. **Always test with real data** from the target environment
+3. **Structural parsing** is more reliable than text-based parsing
+4. **Error handling** should be defensive and graceful
+5. **Test coverage** should include multiple languages and edge cases
+6. **Code quality** (linting, type safety) prevents future bugs
+
+# Lessons Learned - Kindle Parsing Bug Fix
+
+## Character Encoding Issues
+
+### Problem
+- HTML content from Kindle exports contains special characters that don't match test expectations
+- Non-breaking spaces (`&nbsp;` / `\u00A0`) appear identical to regular spaces but are different characters
+- Curly quotes (`'` / `"`) vs straight quotes (`'` / `"`)
+- En/em dashes (`–` / `—`) vs regular hyphens (`-`)
+
+### Solution
+- Always implement text normalization for HTML parsing
+- Create a `normalizeText()` function that handles common character encoding differences
+- Apply normalization to both content text and metadata (chapter names, etc.)
+
+### Code Pattern
+```typescript
+const normalizeText = (text: string): string => {
+  return text
+    .replace(/\u00A0/g, " ") // Non-breaking spaces
+    .replace(/\u2019/g, "'") // Curly single quotes
+    .replace(/\u2018/g, "'") // Curly single quotes
+    .replace(/\u201D/g, '"') // Curly double quotes
+    .replace(/\u201C/g, '"') // Curly double quotes
+    .replace(/\u2013/g, "-") // En dashes
+    .replace(/\u2014/g, "-") // Em dashes
+    .trim();
+};
+```
+
+## Testing Best Practices
+
+### Always Test Features/Fixes
+- **Never skip testing** - every feature or fix must have corresponding tests
+- **Test with real data** - use actual HTML fixtures from different languages/formats
+- **Test edge cases** - empty content, missing elements, malformed HTML
+- **Test character encoding** - especially for international content
+
+### Test Structure
+- Test the first N items (e.g., first 5 highlights) to ensure parsing works consistently
+- Validate all fields: text, color, page, location, chapter, notes
+- Test both positive cases (valid data) and negative cases (missing/invalid data)
+
+### Test Setup
+- Use Vitest with jsdom environment for DOM parsing tests
+- Disable plugins that conflict with test environment (e.g., logseq plugin)
+- Use absolute paths for fixture files to avoid path resolution issues
+
+## Parsing Robustness
+
+### Language Agnostic Design
+- Don't rely on specific text strings like "Highlight" or "Note"
+- Use structural elements (CSS classes, DOM hierarchy) for identification
+- Support multilingual labels for page numbers, locations, etc.
+
+### Error Handling
+- Always check for null/undefined before accessing properties
+- Use optional chaining (`?.`) instead of non-null assertions (`!`)
+- Provide fallback values for missing data
+
+### DOM Navigation
+- Use `nextElementSibling` and `previousElementSibling` for related content
+- Check element classes rather than text content for identification
+- Handle cases where expected elements might be missing
+
+## Code Quality
+
+### Linting
+- Always run linter after making changes
+- Fix regex usage (use `exec()` instead of `match()`)
+- Remove unnecessary type assertions
+- Use optional chaining where appropriate
+
+### Documentation
+- Document complex parsing logic with comments
+- Explain the reasoning behind structural decisions
+- Note language-specific considerations
+
+## Key Takeaways
+
+1. **Character encoding is critical** for international content
+2. **Always test with real data** from the target environment
+3. **Structural parsing** is more reliable than text-based parsing
+4. **Error handling** should be defensive and graceful
+5. **Test coverage** should include multiple languages and edge cases
+6. **Code quality** (linting, type safety) prevents future bugs
+
