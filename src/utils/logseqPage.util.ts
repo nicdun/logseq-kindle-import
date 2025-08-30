@@ -4,6 +4,8 @@ import { KindleBook } from "../models/KindleBook";
 import { LogseqPageEntity } from "../models/LogseqPageEntity";
 import {
   createBlockOnCurrentPage,
+  createChildHighlightBlock,
+  createHeadingBlockOnCurrentPage,
   createPagePropertiesBlock,
   updateBlockState,
 } from "./logseqBlock.util";
@@ -13,6 +15,7 @@ import {
   PROP_TITLE,
 } from "./logseqPageProperties.util";
 import { settings } from "./settings.util";
+import { KindleHighlight } from "../models/KindleHighlight";
 
 export const generateLogseqPage = async (item: KindleBook): Promise<void> => {
   const prefix = settings.pagePrefix();
@@ -50,9 +53,25 @@ const createOrLoadLogseqPage = async (
   updateBlockState(firstBlockOnPage);
 
   const currentPage = await logseq.Editor.getCurrentPage();
+  if (!currentPage) return;
 
-  for (const highlight of item.highlights) {
-    await createBlockOnCurrentPage(currentPage!.uuid, highlight);
+  const shouldGroup = settings.groupBySectionHeader();
+  if (!shouldGroup) {
+    for (const highlight of item.highlights) {
+      await createBlockOnCurrentPage(currentPage.uuid, highlight);
+    }
+  } else {
+    const groups = groupHighlightsByChapter(item.highlights);
+    for (const [chapter, highlights] of groups) {
+      const headingBlock = await createHeadingBlockOnCurrentPage(
+        currentPage.uuid,
+        chapter ?? "(No chapter)"
+      );
+      const parentUuid = headingBlock?.uuid ?? currentPage.uuid;
+      for (const h of highlights) {
+        await createChildHighlightBlock(parentUuid, h);
+      }
+    }
   }
 
   sendNotification("Import successfull!", "success");
@@ -81,4 +100,17 @@ const getPageByTitle = async (
 
       return pages[0];
   }
+};
+
+const groupHighlightsByChapter = (
+  highlights: KindleHighlight[]
+): Map<string | undefined, KindleHighlight[]> => {
+  const groups = new Map<string | undefined, KindleHighlight[]>();
+  for (const h of highlights) {
+    const key = h.chapter;
+    const bucket = groups.get(key) ?? [];
+    bucket.push(h);
+    groups.set(key, bucket);
+  }
+  return groups;
 };

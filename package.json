@@ -54,7 +54,7 @@
     "vitest": "^3.2.4"
   },
   "logseq": {
-    "id": "logseq-kindle-import-dev",
+    "id": "logseq-kindle-import",
     "title": "Kindle Highlights Import",
     "icon": "./assets/kindle-logo.png"
   }
