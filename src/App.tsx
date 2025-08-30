@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import logo from "./assets/kindle-logo.png";
-import { useAppVisible } from "./hooks/useAppVisible";
 import KindleDashboard from "./components/KindleDashboard";
+import { useAppVisible } from "./hooks/useAppVisible";
 
 export function App() {
   const innerRef = useRef<HTMLDivElement>(null);
@@ -12,7 +12,7 @@ export function App() {
       <main
         className="relative h-full"
         onClick={(e) => {
-          if (!innerRef.current?.contains(e.target as any)) {
+          if (!innerRef.current?.contains(e.target as Node)) {
             window.logseq.hideMainUI();
           }
         }}
