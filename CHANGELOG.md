@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.3.0...v1.4.0) (2025-08-30)
+
+
+### Features
+
+* **language-parsing:** language issues ([5ad7643](https://github.com/nicdun/logseq-kindle-import/commit/5ad76437b88328c65a29f667c4c271cd4761865f))
+
 # [1.3.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.2.2...v1.3.0) (2024-01-23)
 
 
