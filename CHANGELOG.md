@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.3.0...v1.4.0) (2025-10-29)
+
+
+### Bug Fixes
+
+* **deps:** update tailwindcss monorepo to v4.1.13 ([#612](https://github.com/nicdun/logseq-kindle-import/issues/612)) ([fbb5e17](https://github.com/nicdun/logseq-kindle-import/commit/fbb5e178a983eab665e5a1a15757e630dd6eaff0))
+
+
+### Features
+
+* **language-parsing:** language issues ([5ad7643](https://github.com/nicdun/logseq-kindle-import/commit/5ad76437b88328c65a29f667c4c271cd4761865f))
+
 # [1.4.0](https://github.com/nicdun/logseq-kindle-import/compare/v1.3.0...v1.4.0) (2025-10-26)
 
 
