@@ -28,7 +28,7 @@
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "12.0.2",
-    "@types/jsdom": "^21.1.7",
+    "@types/jsdom": "^28.0.0",
     "@types/node": "20.19.43",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
